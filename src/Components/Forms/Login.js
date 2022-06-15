@@ -2,7 +2,7 @@ import React from 'react';
 import Card from '../UI/Card/Card';
 import Button from '../UI/Button/Button';
 
-import classes from 'Login.module.css';
+import classes from './Login.module.css';
 
 const Login = (props) => {
   const formContentHandler = () => {
@@ -36,3 +36,4 @@ const Login = (props) => {
     </Card>
   );
 };
+export default Login;
