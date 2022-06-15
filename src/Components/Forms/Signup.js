@@ -1,21 +1,32 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import Card from '../UI/Card/Card';
 import Button from '../UI/Button/Button';
 
 import classes from './Signup.module.css';
 
 const Signup = (props) => {
-  const nameInputRef = useRef();
+  /* const nameInputRef = useRef();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const mobileInputRef = useRef();
   const cityInputRef = useRef();
+*/
+  const [enteredName, setEnteredName] = useState('');
+  const [nameIsValid, setNameIsValid] = useState(false);
 
-  const [enteredName, setEnteredName] = useState();
-  const [enteredEmail, setEnteredEmail] = useState();
-  const [enteredPassword, setEnteredPassword] = useState();
-  const [enteredMobile, setEnteredMobile] = useState();
-  const [enteredCity, setEnteredCity] = useState();
+  const [enteredEmail, setEnteredEmail] = useState('');
+  const [emailIsValid, setEmailIsValid] = useState(false);
+
+  const [enteredPassword, setEnteredPassword] = useState('');
+  const [passwordIsValid, setPasswordIsValid] = useState(false);
+
+  const [enteredCPassword, setEnteredCPassword] = useState('');
+  const [cpasswordIsValid, setCPasswordIsValid] = useState(false);
+
+  const [enteredMobile, setEnteredMobile] = useState('');
+  const [mobileIsValid, setMobileIsValid] = useState(false);
+
+  const [enteredCity, setEnteredCity] = useState('');
 
   const nameHandler = (e) => {
     setEnteredName(e.target.value);
@@ -26,15 +37,44 @@ const Signup = (props) => {
   };
 
   const passwordHandler = (e) => {
-    enteredPassword(e.target.value);
+    setEnteredPassword(e.target.value);
+  };
+
+  const cpasswordHandler = (e) => {
+    setEnteredCPassword(e.target.value);
   };
 
   const mobileHandler = (e) => {
-    enteredMobile(e.target.value);
+    setEnteredMobile(e.target.value);
   };
 
   const cityHandler = (e) => {
     setEnteredCity(e.target.value);
+  };
+
+  const validateName = () => {
+    setNameIsValid(enteredName.length > 3);
+    
+  };
+
+  const validateEmail = () => {
+    setEmailIsValid(enteredEmail.includes('@'));
+   
+  };
+
+  const validatePassword = () => {
+    setPasswordIsValid(enteredPassword.trim().length > 6);
+   
+  };
+
+  const validateCPassword = () => {
+    setCPasswordIsValid(enteredPassword === enteredCPassword);
+   
+  };
+
+  const validateMobile = () => {
+    setMobileIsValid(enteredMobile.length > 9 && enteredMobile.length < 15);
+   
   };
 
   const formContentHandler = () => {
@@ -43,11 +83,11 @@ const Signup = (props) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const enteredName = nameInputRef.current.value;
+    /*const enteredName = nameInputRef.current.value;
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
     const enteredMobile = mobileInputRef.current.value;
-    const enteredCity = cityInputRef.current.value;
+    const enteredCity = cityInputRef.current.value; */
 
     const enteredData = {
       name: enteredName,
@@ -69,30 +109,51 @@ const Signup = (props) => {
           <label>Name</label>
           <input
             type="text"
-            ref={nameInputRef}
-            onBlur={nameHandler}
+            onChange={nameHandler}
+            onBlur={validateName}
+            value={enteredName}
             autoComplete="false"
           />
         </div>
         <div className={classes['form-control']}>
           <label>E Mail</label>
-          <input type="text" ref={emailInputRef} onBlur={emailHandler} />
+          <input
+            type="text"
+            onChange={emailHandler}
+            onBlur={validateEmail}
+            value={enteredEmail}
+          />
         </div>
         <div className={classes['form-control']}>
           <label>Password</label>
           <input
             type="password"
-            ref={passwordInputRef}
-            onBlur={passwordHandler}
+            onChange={passwordHandler}
+            onBlur={validatePassword}
+            value={enteredPassword}
+          />
+        </div>
+        <div className={classes['form-control']}>
+          <label>Confirm Password</label>
+          <input
+            type="text"
+            onChange={cpasswordHandler}
+            onBlur={validateCPassword}
+            value={enteredCPassword}
           />
         </div>
         <div className={classes['form-control']}>
           <label>Mobile</label>
-          <input type="number" ref={mobileInputRef} onBlur={mobileHandler} />
+          <input
+            type="number"
+            onChange={mobileHandler}
+            onBlur={validateMobile}
+            value={enteredMobile}
+          />
         </div>
         <div className={classes['form-control']}>
           <label>City</label>
-          <input type="text" ref={cityInputRef} onBlur={cityHandler} />
+          <input type="text" onChange={cityHandler} value={enteredCity} />
         </div>
         <div className={classes.actions}>
           <Button type="submit" className={classes.btn}>
