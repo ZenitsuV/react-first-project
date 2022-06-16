@@ -12,19 +12,19 @@ const Signup = (props) => {
   const cityInputRef = useRef();
 */
   const [enteredName, setEnteredName] = useState('');
-  const [nameIsValid, setNameIsValid] = useState(false);
+  const [nameIsValid, setNameIsValid] = useState();
 
   const [enteredEmail, setEnteredEmail] = useState('');
-  const [emailIsValid, setEmailIsValid] = useState(false);
+  const [emailIsValid, setEmailIsValid] = useState();
 
   const [enteredPassword, setEnteredPassword] = useState('');
-  const [passwordIsValid, setPasswordIsValid] = useState(false);
+  const [passwordIsValid, setPasswordIsValid] = useState();
 
   const [enteredCPassword, setEnteredCPassword] = useState('');
-  const [cpasswordIsValid, setCPasswordIsValid] = useState(false);
+  const [cpasswordIsValid, setCPasswordIsValid] = useState();
 
   const [enteredMobile, setEnteredMobile] = useState('');
-  const [mobileIsValid, setMobileIsValid] = useState(false);
+  const [mobileIsValid, setMobileIsValid] = useState();
 
   const [enteredCity, setEnteredCity] = useState('');
 
@@ -53,28 +53,23 @@ const Signup = (props) => {
   };
 
   const validateName = () => {
-    setNameIsValid(enteredName.length > 3);
-    
+    setNameIsValid(enteredName.trim().length > 3);
   };
 
   const validateEmail = () => {
     setEmailIsValid(enteredEmail.includes('@'));
-   
   };
 
   const validatePassword = () => {
     setPasswordIsValid(enteredPassword.trim().length > 6);
-   
   };
 
   const validateCPassword = () => {
     setCPasswordIsValid(enteredPassword === enteredCPassword);
-   
   };
 
   const validateMobile = () => {
     setMobileIsValid(enteredMobile.length > 9 && enteredMobile.length < 15);
-   
   };
 
   const formContentHandler = () => {
@@ -100,13 +95,21 @@ const Signup = (props) => {
     //const resultData = formValidation(enteredData);
 
     console.log(enteredData);
+    console.log(nameIsValid);
   };
 
   return (
     <Card className={classes.signup}>
       <form onSubmit={submitHandler}>
-        <div className={classes['form-control']}>
-          <label>Name</label>
+        <div
+          className={`${classes['form-control']} ${
+            nameIsValid === false && classes['invalid']
+          }`}
+        >
+          <div className={classes.label}>
+            <label>Name</label>
+            <label>Name</label>
+          </div>
           <input
             type="text"
             onChange={nameHandler}
@@ -115,7 +118,11 @@ const Signup = (props) => {
             autoComplete="false"
           />
         </div>
-        <div className={classes['form-control']}>
+        <div
+          className={`${classes['form-control']} ${
+            emailIsValid === false && classes['invalid']
+          }`}
+        >
           <label>E Mail</label>
           <input
             type="text"
@@ -124,7 +131,11 @@ const Signup = (props) => {
             value={enteredEmail}
           />
         </div>
-        <div className={classes['form-control']}>
+        <div
+          className={`${classes['form-control']} ${
+            passwordIsValid === false && classes['invalid']
+          }`}
+        >
           <label>Password</label>
           <input
             type="password"
@@ -133,7 +144,11 @@ const Signup = (props) => {
             value={enteredPassword}
           />
         </div>
-        <div className={classes['form-control']}>
+        <div
+          className={`${classes['form-control']} ${
+            cpasswordIsValid === false && classes['invalid']
+          }`}
+        >
           <label>Confirm Password</label>
           <input
             type="text"
@@ -142,7 +157,11 @@ const Signup = (props) => {
             value={enteredCPassword}
           />
         </div>
-        <div className={classes['form-control']}>
+        <div
+          className={`${classes['form-control']} ${
+            mobileIsValid === false && classes['invalid']
+          }`}
+        >
           <label>Mobile</label>
           <input
             type="number"

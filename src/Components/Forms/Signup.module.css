@@ -34,6 +34,11 @@
   border-color: red;
   background: #fbdada;
 }
+
+.form-control.label {
+  display: flex;
+}
+
 .actions {
   text-align: center;
 }
