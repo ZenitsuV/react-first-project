@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Card from '../UI/Card/Card';
 import Button from '../UI/Button/Button';
+import ErrorModal from '../UI/Modal/ErrorModal';
 
 import classes from './Signup.module.css';
 
@@ -27,6 +28,8 @@ const Signup = (props) => {
   const [mobileIsValid, setMobileIsValid] = useState();
 
   const [enteredCity, setEnteredCity] = useState('');
+
+  const [msg, setMsg] = useState();
 
   const nameHandler = (e) => {
     setEnteredName(e.target.value);
@@ -91,99 +94,135 @@ const Signup = (props) => {
       mobile: enteredMobile,
       city: enteredCity,
     };
-
     //const resultData = formValidation(enteredData);
+    localStorage.setItem('usersList', JSON.stringify(enteredData));
 
-    console.log(enteredData);
-    console.log(nameIsValid);
+    setMsg({
+      title: 'Success',
+      message: 'User added Successfully!',
+    });
+
+    setEnteredName('');
+    setEnteredEmail('');
+    setEnteredPassword('');
+    setEnteredCPassword('');
+    setEnteredMobile('');
+    setEnteredCity('');
+  };
+
+  const ErrorHandler = () => {
+    setMsg(null);
   };
 
   return (
-    <Card className={classes.signup}>
-      <form onSubmit={submitHandler}>
-        <div
-          className={`${classes['form-control']} ${
-            nameIsValid === false && classes['invalid']
-          }`}
-        >
-          <div className={classes.label}>
+    <div>
+      {msg && (
+        <ErrorModal
+          title={msg.title}
+          message={msg.message}
+          onConfirm={ErrorHandler}
+        />
+      )}
+      <Card className={classes.signup}>
+        <form onSubmit={submitHandler}>
+          <div
+            className={`${classes['form-control']} ${
+              nameIsValid === false && classes['invalid']
+            }`}
+          >
             <label>Name</label>
-            <label>Name</label>
+            <label className={classes['error']}>
+              {nameIsValid === false && 'Please enter valid name!'}
+            </label>
+            <input
+              type="text"
+              onChange={nameHandler}
+              onBlur={validateName}
+              value={enteredName}
+              autoComplete="false"
+            />
           </div>
-          <input
-            type="text"
-            onChange={nameHandler}
-            onBlur={validateName}
-            value={enteredName}
-            autoComplete="false"
-          />
+          <div
+            className={`${classes['form-control']} ${
+              emailIsValid === false && classes['invalid']
+            }`}
+          >
+            <label>E Mail</label>
+            <label className={classes['error']}>
+              {emailIsValid === false && 'Please enter valid mail!'}
+            </label>
+            <input
+              type="text"
+              onChange={emailHandler}
+              onBlur={validateEmail}
+              value={enteredEmail}
+            />
+          </div>
+          <div
+            className={`${classes['form-control']} ${
+              passwordIsValid === false && classes['invalid']
+            }`}
+          >
+            <label>Password</label>
+            <label className={classes['error']}>
+              {passwordIsValid === false && 'Please enter valid password!'}
+            </label>
+            <input
+              type="password"
+              onChange={passwordHandler}
+              onBlur={validatePassword}
+              value={enteredPassword}
+            />
+          </div>
+          <div
+            className={`${classes['form-control']} ${
+              cpasswordIsValid === false && classes['invalid']
+            }`}
+          >
+            <label>Confirm Password</label>
+            <label className={classes['error']}>
+              {cpasswordIsValid === false &&
+                'Password doesnt match confirm password!'}
+            </label>
+            <input
+              type="text"
+              onChange={cpasswordHandler}
+              onBlur={validateCPassword}
+              value={enteredCPassword}
+            />
+          </div>
+          <div
+            className={`${classes['form-control']} ${
+              mobileIsValid === false && classes['invalid']
+            }`}
+          >
+            <label>Mobile</label>
+            <label className={classes['error']}>
+              {mobileIsValid === false && 'Password enter valid mobile number!'}
+            </label>
+            <input
+              type="number"
+              onChange={mobileHandler}
+              onBlur={validateMobile}
+              value={enteredMobile}
+            />
+          </div>
+          <div className={classes['form-control']}>
+            <label>City</label>
+            <input type="text" onChange={cityHandler} value={enteredCity} />
+          </div>
+          <div className={classes.actions}>
+            <Button type="submit" className={classes.btn}>
+              Signup
+            </Button>
+          </div>
+        </form>
+        <div className={classes.formLink}>
+          Already have an account?{' '}
+          <span onClick={formContentHandler}>Login</span>
         </div>
-        <div
-          className={`${classes['form-control']} ${
-            emailIsValid === false && classes['invalid']
-          }`}
-        >
-          <label>E Mail</label>
-          <input
-            type="text"
-            onChange={emailHandler}
-            onBlur={validateEmail}
-            value={enteredEmail}
-          />
-        </div>
-        <div
-          className={`${classes['form-control']} ${
-            passwordIsValid === false && classes['invalid']
-          }`}
-        >
-          <label>Password</label>
-          <input
-            type="password"
-            onChange={passwordHandler}
-            onBlur={validatePassword}
-            value={enteredPassword}
-          />
-        </div>
-        <div
-          className={`${classes['form-control']} ${
-            cpasswordIsValid === false && classes['invalid']
-          }`}
-        >
-          <label>Confirm Password</label>
-          <input
-            type="text"
-            onChange={cpasswordHandler}
-            onBlur={validateCPassword}
-            value={enteredCPassword}
-          />
-        </div>
-        <div
-          className={`${classes['form-control']} ${
-            mobileIsValid === false && classes['invalid']
-          }`}
-        >
-          <label>Mobile</label>
-          <input
-            type="number"
-            onChange={mobileHandler}
-            onBlur={validateMobile}
-            value={enteredMobile}
-          />
-        </div>
-        <div className={classes['form-control']}>
-          <label>City</label>
-          <input type="text" onChange={cityHandler} value={enteredCity} />
-        </div>
-        <div className={classes.actions}>
-          <Button type="submit" className={classes.btn}>
-            Signup
-          </Button>
-        </div>
-      </form>
-      <div className={classes.formLink}>
-        Already have an account? <span onClick={formContentHandler}>Login</span>
-      </div>
-    </Card>
+      </Card>
+    </div>
   );
 };
 
