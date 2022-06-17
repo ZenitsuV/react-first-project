@@ -50,6 +50,7 @@ const Login = (props) => {
             emailIsValid === false && classes['invalid']
           }`}
         >
+          <label>{props.setError}</label>
           <label>E Mail</label>
           <input
             type="text"
