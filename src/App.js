@@ -4,6 +4,7 @@ import Signup from './Components/Forms/Signup';
 import Home from './Components/Home/Home';
 import MainHeader from './Components/MainHeader/MainHeader';
 import ErrorModal from './Components/UI/Modal/ErrorModal';
+import UserDataContext from './Store/userData-context';
 
 export default function App() {
   const [formContent, setFormContent] = useState('LoginForm');
@@ -53,17 +54,24 @@ export default function App() {
           onConfirm={ErrorHandler}
         />
       )}
-      <MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
-      {formContent !== 'SignupForm' && !isLoggedIn && (
-        <Login
-          onSwitchForm={formSwitch}
-          onLogin={loginHandler}
-          setError={error}
-        />
-      )}
-      {formContent !== 'SignupForm' && isLoggedIn && (
-        <Home onLogout={logoutHandler} />
-      )}
+      <UserDataContext.provider
+        value={{
+          isLoggedIn: isLoggedIn,
+          onLogout: logoutHandler,
+        }}
+      >
+        <MainHeader />
+        {formContent !== 'SignupForm' && !isLoggedIn && (
+          <Login
+            onSwitchForm={formSwitch}
+            onLogin={loginHandler}
+            setError={error}
+          />
+        )}
+        {formContent !== 'SignupForm' && isLoggedIn && (
+          <Home onLogout={logoutHandler} />
+        )}
+      </UserDataContext.provider>
       {formContent !== 'LoginForm' && <Signup onSwitchForm={formSwitch} />}
     </div>
   );
