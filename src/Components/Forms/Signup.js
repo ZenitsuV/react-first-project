@@ -87,6 +87,8 @@ const Signup = (props) => {
     const enteredMobile = mobileInputRef.current.value;
     const enteredCity = cityInputRef.current.value; */
 
+    const oldUserLists = JSON.parse(localStorage.getItem('usersList')) || [];
+
     const enteredData = {
       name: enteredName,
       email: enteredEmail,
@@ -94,8 +96,9 @@ const Signup = (props) => {
       mobile: enteredMobile,
       city: enteredCity,
     };
-    //const resultData = formValidation(enteredData);
-    localStorage.setItem('usersList', JSON.stringify(enteredData));
+
+    oldUserLists.push(enteredData);
+    localStorage.setItem('usersList', JSON.stringify(oldUserLists));
 
     setMsg({
       title: 'Success',

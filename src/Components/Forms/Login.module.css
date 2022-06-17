@@ -1,7 +1,7 @@
 .login {
   width: 90%;
   max-width: 40rem;
-  margin: 2rem auto;
+  margin: 12rem auto;
   padding: 2rem;
 }
 
@@ -50,7 +50,7 @@
 }
 @media (min-width: 768px) {
   .form-control {
-    align-items: center;
+    align-items: left;
     flex-direction: column;
   }
 }
