@@ -17,7 +17,7 @@ export default function App() {
     const loggedUserInformation = JSON.parse(
       localStorage.getItem('loggedUserData')
     );
-    if (userLoginStatus === '1') {
+    if (userLoginStatus === '1' && loggedUserInformation) {
       setIsLoggedIn(true);
       setSendUserData(loggedUserInformation);
     }
@@ -32,7 +32,8 @@ export default function App() {
     localStorage.setItem('isLoggedIn', '1');
     if (isUserAvailable)
       loggedUserData(userData, email, password, isUserAvailable);
-    else setError(['Error', 'Invalid Email and Password!']);
+    else alert('Invalid Email and Password!');
+    //setError(['Error', 'Invalid Email and Password!']);
   };
 
   const ErrorHandler = () => {

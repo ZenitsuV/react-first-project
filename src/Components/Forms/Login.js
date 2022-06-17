@@ -40,6 +40,9 @@ const Login = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
     props.onLogin(enteredEmail, enteredPassword);
+
+    setEnteredEmail('');
+    setEnteredPassword('');
   };
 
   return (
